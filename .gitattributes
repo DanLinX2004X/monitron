@@ -1,81 +1,26 @@
+# =====================================
+# GitHub Linguist Language Override
+# =====================================
 
-# CORE GIT SETTINGS
-
-# Cross-platform line endings (Windows/Linux/Mac compatibility)
-* text=auto eol=lf
-
-
-# GITHUB LANGUAGES STATISTICS
-
-# Programming Languages
-*.py linguist-language=Python
-*.js linguist-language=JavaScript
-*.ts linguist-language=TypeScript
-*.go linguist-language=Go
-*.rs linguist-language=Rust
-*.java linguist-language=Java
-*.cpp linguist-language=C++
-*.c linguist-language=C
-*.cs linguist-language=C#
-*.php linguist-language=PHP
-*.rb linguist-language=Ruby
-*.sh linguist-language=Shell
-*.ps1 linguist-language=PowerShell
-Dockerfile linguist-language=Dockerfile
-Makefile linguist-language=Makefile
-
-# Configuration & Data Formats
+# the main language — YAML
 *.yml linguist-language=YAML
 *.yaml linguist-language=YAML
-*.json linguist-language=JSON
-*.xml linguist-language=XML
-*.toml linguist-language=TOML
-*.ini linguist-language=INI
 docker-compose.yml linguist-language=YAML
-*.config linguist-language=XML
+alertmanager/*.yml linguist-language=YAML
+prometheus/config/*.yml linguist-language=YAML
 
-# Web Technologies
-*.html linguist-language=HTML
-*.css linguist-language=CSS
-*.scss linguist-language=SCSS
-*.sass linguist-language=Sass
+# JSON — Grafana dashboards (maybe other config)
+grafana/provisioning/dashboards/*.json linguist-language=JSON
+grafana/provisioning/datasources/*.json linguist-language=JSON
 
-# Documentation (excluded from code statistics)
-*.md linguist-documentation=true
-*.rst linguist-documentation=true
-*.txt linguist-documentation=true
-LICENSE linguist-documentation=true
-README.md linguist-documentation=true
-CHANGELOG.md linguist-documentation=true
-CONTRIBUTING.md linguist-documentation=true
+# HTML — only text-file (for test nginx)
+nginx/html/*.html linguist-language=HTML
 
-# Vendor/Ignored Files (excluded from language statistics)
-*.env linguist-vendored=true
-*.env.* linguist-vendored=true
-.gitignore linguist-vendored=true
-.dockerignore linguist-vendored=true
+# ignoring tmp or log
+logs/* linguist-detectable=false
+prometheus/data/* linguist-detectable=false
+grafana/data/* linguist-detectable=false
 
-
-
-# GIT FILE HANDLING
-
-# Binary Files (protected from diff/merge)
-*.png binary
-*.jpg binary
-*.jpeg binary
-*.gif binary
-*.svg binary
-*.ico binary
-*.pdf binary
-*.zip binary
-*.tar binary
-*.gz binary
-*.7z binary
-
-# Executable Scripts (preserve executable bit + LF endings)
-*.sh text eol=lf
-*.bash text eol=lf
-
-# Exportable/Generated files
-*.min.js binary
-*.min.css binary
+# README и dosc NOT include for statistics
+*.md linguist-detectable=false
+screenshots/* linguist-detectable=false
