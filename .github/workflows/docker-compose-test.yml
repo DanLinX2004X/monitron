@@ -19,7 +19,6 @@ jobs:
 
       - name: Validate Prometheus config
         run: |
-          # Скачиваем promtool прямо в workflow
           curl -sSL https://github.com/prometheus/prometheus/releases/download/v2.48.0/prometheus-2.48.0.linux-amd64.tar.gz | tar -xz
           ./prometheus-2.48.0.linux-amd64/promtool check config ./prometheus/config/prometheus.yml
 
@@ -28,6 +27,9 @@ jobs:
 
       - name: Start services
         run: docker compose up -d
+
+      - name: Fix Prometheus data folder permissions
+        run: sudo chown -R 65534:65534 ./prometheus/data
 
       - name: Wait for containers to initialize
         run: sleep 20
