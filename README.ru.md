@@ -1,10 +1,12 @@
 ![Build Status](https://img.shields.io/github/actions/workflow/status/DanLinX2004X/monitron/docker-compose-test.yml?branch=main)
 ![License](https://img.shields.io/badge/license-MIT-green)
-![Docker](https://img.shields.io/badge/docker-compose-v2.15-blue)
+![Docker Compose](https://img.shields.io/badge/Docker%20Compose-v2.15-blue?logo=docker&logoColor=white)
 ![Prometheus](https://img.shields.io/badge/prometheus-v2.48-orange)
 ![Grafana](https://img.shields.io/badge/grafana-10.2-purple)
 ![Alertmanager](https://img.shields.io/badge/alertmanager-active-red)
 ![GitHub Actions](https://img.shields.io/badge/GitHub_Actions-2088FF?logo=github-actions)
+
+**🇺🇸 [English Version](README.md)** | **🇷🇺 Русский**
 
 # 🚀 Monitron
 
