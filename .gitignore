@@ -1,0 +1,39 @@
+# .gitignore
+
+# Docker
+.dockerignore
+docker-compose.override.yml
+docker-compose.*.yml
+
+
+# Environment
+.env
+.env.local
+.env.*
+!.env.example
+
+# logs and data of monitoring
+*.log
+*.tmp
+tmp/
+logs/
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+
+# IDE Files
+.vscode/
+.idea/
+
+# System files
+.DS_Store
+Thumbs.db
+
+# Prometheus
+prometheus/data/
+
+# Grafana
+grafana/data/
+
