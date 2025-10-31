@@ -1,31 +1,52 @@
 name: Docker Compose Test
 
 on:
-push:
-branches:
-- main
-pull_request:
-workflow_dispatch:
+  push:
+    branches: [main]
+  pull_request: {}
+  workflow_dispatch: {}
 
 jobs:
-compose-up:
-runs-on: ubuntu-latest
+  compose-test:
+    runs-on: ubuntu-latest
 
-```
-steps:
-  - name: Checkout repository
-    uses: actions/checkout@v4
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-  - name: Set up Docker Buildx
-    uses: docker/setup-buildx-action@v3
+      - name: Validate Docker Compose
+        run: docker compose config
 
-  - name: Install docker-compose
-    run: |
-      apt-get update && apt-get install -y docker-compose
+      - name: Validate Prometheus config
+        run: |
+          # Скачиваем promtool прямо в workflow
+          curl -sSL https://github.com/prometheus/prometheus/releases/download/v2.48.0/prometheus-2.48.0.linux-amd64.tar.gz | tar -xz
+          ./prometheus-2.48.0.linux-amd64/promtool check config ./prometheus/config/prometheus.yml
 
-  - name: Build and run docker-compose
-    run: |
-      docker-compose -f docker-compose.yml up -d --build
-      docker-compose ps
-      docker-compose down
-```
+      - name: Build services
+        run: docker compose build
+
+      - name: Start services
+        run: docker compose up -d
+
+      - name: Wait for containers to initialize
+        run: sleep 20
+
+      - name: Check service health
+        run: |
+          set -e
+          services=("prometheus" "grafana" "nginx" "alertmanager")
+          for svc in "${services[@]}"; do
+            status=$(docker inspect -f '{{.State.Health.Status}}' "$svc" 2>/dev/null || echo "unknown")
+            if [[ "$status" != "healthy" ]]; then
+              echo "❌ $svc container is not healthy!"
+              docker logs "$svc" || true
+              exit 1
+            else
+              echo "✅ $svc container is healthy"
+            fi
+          done
+
+      - name: Stop services
+        if: always()
+        run: docker compose down
