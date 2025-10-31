@@ -6,6 +6,8 @@
 ![Alertmanager](https://img.shields.io/badge/alertmanager-active-red)
 ![GitHub Actions](https://img.shields.io/badge/GitHub_Actions-2088FF?logo=github-actions)
 
+**🇺🇸 English** | **🇷🇺 [Russian Version](README.ru.md)**
+
 # 🚀 Monitron
 
 Personal Monitoring Stack for developers and DevOps engineers.
