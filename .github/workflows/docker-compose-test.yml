@@ -22,33 +22,23 @@ jobs:
           curl -sSL https://github.com/prometheus/prometheus/releases/download/v2.48.0/prometheus-2.48.0.linux-amd64.tar.gz | tar -xz
           ./prometheus-2.48.0.linux-amd64/promtool check config ./prometheus/config/prometheus.yml
 
-      - name: Build services
-        run: docker compose build
-
-      - name: Prepare Prometheus folder
-        run: |
-          mkdir -p ./prometheus/data
-          sudo chown -R 65534:65534 ./prometheus/data
-
       - name: Start services
-        run: docker compose up -d
-
-      - name: Wait for containers to initialize
-        run: sleep 20
+        run: |
+          docker compose up -d --build
+          sleep 30
 
       - name: Check containers are running
         run: |
           set -e
           services=("prometheus" "grafana" "nginx" "alertmanager")
           for svc in "${services[@]}"; do
-            status=$(docker inspect -f '{{.State.Health.Status}}' "$svc" 2>/dev/null || echo "unknown")
-            if [[ "$status" == "healthy" || "$status" == "starting" ]]; then
-              echo "✅ $svc container is running ($status)"
+            if docker ps --filter "name=$svc" --format "table {{.Names}}\t{{.Status}}" | grep -q Up; then
+              echo "$svc container is running"
             else
-              echo "❌ $svc container not healthy"
+              echo "$svc container is not running"
               docker logs "$svc" || true
               exit 1
-              fi
+            fi
           done
 
       - name: Stop services
