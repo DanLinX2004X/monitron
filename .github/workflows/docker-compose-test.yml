@@ -25,11 +25,13 @@ jobs:
       - name: Build services
         run: docker compose build
 
+      - name: Prepare Prometheus folder
+        run: |
+          mkdir -p ./prometheus/data
+          sudo chown -R 65534:65534 ./prometheus/data
+
       - name: Start services
         run: docker compose up -d
-
-      - name: Fix Prometheus data folder permissions
-        run: sudo chown -R 65534:65534 ./prometheus/data
 
       - name: Wait for containers to initialize
         run: sleep 20
