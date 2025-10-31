@@ -2,25 +2,29 @@
 # GitHub Linguist Language Override
 # =====================================
 
-# the main language — YAML
-*.yml linguist-language=YAML
-*.yaml linguist-language=YAML
-docker-compose.yml linguist-language=YAML
-alertmanager/*.yml linguist-language=YAML
-prometheus/config/*.yml linguist-language=YAML
+# YAML as CODE
+* linguist-language=YAML
+*.yml linguist-detectable=true
+*.yaml linguist-detectable=true
+docker-compose.yml linguist-detectable=true
+alertmanager/*.yml linguist-detectable=true
+prometheus/config/*.yml linguist-detectable=true
+grafana/provisioning/datasources/*.yml linguist-detectable=true
 
-# JSON — Grafana dashboards (maybe other config)
-grafana/provisioning/dashboards/*.json linguist-language=JSON
-grafana/provisioning/datasources/*.json linguist-language=JSON
+# JSON (Grafana) as CODE
+*.json linguist-language=JSON
+grafana/provisioning/dashboards/*.json linguist-detectable=true
+grafana/provisioning/datasources/*.json linguist-detectable=true
 
-# HTML — only text-file (for test nginx)
-nginx/html/*.html linguist-language=HTML
+# HTML - NOT Include for stat
+nginx/html/*.html linguist-detectable=false
+*.html linguist-detectable=false
 
-# ignoring tmp or log
-logs/* linguist-detectable=false
+# ignore some files prometheus
+prometheus/data/* linguist-vendored=true
 prometheus/data/* linguist-detectable=false
-grafana/data/* linguist-detectable=false
 
-# README и dosc NOT include for statistics
+# ignoring docs
 *.md linguist-detectable=false
 screenshots/* linguist-detectable=false
+LICENSE linguist-detectable=false
