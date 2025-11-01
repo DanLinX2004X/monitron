@@ -3,7 +3,14 @@ name: Docker Compose Test
 on:
   push:
     branches: [main]
-  pull_request: {}
+    paths-ignore:
+      - '**/*.md'
+      - 'screenshots/**'
+  pull_request:
+    branches: [main]
+    paths-ignore:
+      - '**/*.md'
+      - 'screenshots/**'
   workflow_dispatch: {}
 
 jobs:
