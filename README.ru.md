@@ -70,9 +70,12 @@ docker compose ps
 Сервис URL Логин
 
 Grafana http://localhost:3000 admin / admin
-Prometheus http://localhost:9090 —
-Alertmanager http://localhost:9093 —
-Nginx http://localhost:8080 —
+
+Prometheus http://localhost:9090
+
+Alertmanager http://localhost:9093
+
+Nginx http://localhost:8080
 
 P.S. Для входа в Grafana требуется логин и пароль. При первом открытии там буде admin/admin (логин и пароль совпадают), после этого Grafana попросит поменять пароль.
 
