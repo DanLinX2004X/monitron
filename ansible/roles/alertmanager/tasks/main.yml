@@ -1,0 +1,16 @@
+---
+- name: Ensure local alertmanager config dir exists
+  file:
+    path: ./alertmanager
+    state: directory
+
+- name: Deploy Alertmanager config locally
+  template:
+    src: alertmanager.yml.j2
+    dest: ./alertmanager/alertmanager.yml
+    mode: 0644
+
+- name: Notify if Telegram vars are missing
+  debug:
+    msg: "TG_BOT_TOKEN or TG_CHAT_ID not set, Telegram alerts will not work."
+  when: tg_bot_token == "" or tg_chat_id == ""

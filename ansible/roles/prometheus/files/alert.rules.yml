@@ -1,0 +1,63 @@
+groups:
+  - name: node_exporter_alerts
+    rules:
+      # CPU usage > 90%
+      - alert: HighCPU
+        expr: 100 * (1 - avg by (instance)(rate(node_cpu_seconds_total{mode="idle"}[1m]))) > 90
+        for: 30s
+        labels:
+          severity: critical
+        annotations:
+          summary: "High CPU usage on {{ $labels.instance }}"
+          description: "CPU usage is above 90%"
+
+      # RAM usage > 90%
+      - alert: HighMemory
+        expr: 100 * (1 - (node_memory_MemAvailable_bytes / node_memory_MemTotal_bytes)) > 90
+        for: 30s
+        labels:
+          severity: warning
+        annotations:
+          summary: "High memory usage on {{ $labels.instance }}"
+          description: "Memory usage is above 90%"
+
+      # Disk usage > 90% (корневой раздел)
+      - alert: HighDisk
+        expr: 100 * (node_filesystem_size_bytes{mountpoint="/"} - node_filesystem_avail_bytes{mountpoint="/"}) / node_filesystem_size_bytes{mountpoint="/"} > 90
+        for: 1m
+        labels:
+          severity: warning
+        annotations:
+          summary: "High disk usage on {{ $labels.instance }}"
+          description: "Disk usage above 90% on /"
+
+  - name: nginx_exporter_alerts
+    rules:
+      # NGINX error rate > 5% / minute
+      - alert: NginxHighErrorRate
+        expr: sum(rate(nginx_http_requests_total{status=~"5.."}[1m])) by (instance)
+              / sum(rate(nginx_http_requests_total[1m])) by (instance) > 0.05
+        for: 1m
+        labels:
+          severity: critical
+        annotations:
+          summary: "NGINX error rate high on {{ $labels.instance }}"
+          description: "More than 5% of requests return 5xx errors"
+
+      # NGINX no active connections
+      - alert: NginxNoConnections
+        expr: nginx_connections_active == 0
+        for: 1m
+        labels:
+          severity: warning
+        annotations:
+          summary: "NGINX has zero active connections on {{ $labels.instance }}"
+          description: "There are currently no active connections"
+##      - alert: TestAlert
+##        expr: vector(1) == 1
+##        for: 5s
+##        labels:
+##          severity: warning
+##        annotations:
+##          summary: "Test alert"
+##          description: "This alert always fires for testing."

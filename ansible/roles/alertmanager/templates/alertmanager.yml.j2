@@ -1,0 +1,19 @@
+global:
+  resolve_timeout: {{ resolve_timeout }}
+
+route:
+  receiver: 'telegram'
+  group_wait: {{ group_wait }}
+  group_interval: {{ group_interval }}
+  repeat_interval: {{ repeat_interval }}
+
+receivers:
+  - name: 'telegram'
+    telegram_configs:
+      - bot_token: "{{ tg_bot_token | default('') }}"
+        chat_id: "{{ tg_chat_id | default('') }}"
+        message: |
+          *Alert:* ALERT_NAME
+          *Instance:* INSTANCE
+          *Description:* DESCRIPTION
+          *Severity:* SEVERITY

@@ -1,0 +1,14 @@
+---
+- name: "Copy prometheus.yml to project"
+  copy:
+    src: prometheus.yml
+    dest: "{{ project_root }}/prometheus/config/prometheus.yml"
+    mode: '0644'
+    owner: "{{ ansible_user_id | default('root') }}"
+
+- name: "Copy alert.rules.yml to project"
+  copy:
+    src: alert.rules.yml
+    dest: "{{ project_root }}/prometheus/config/alert.rules.yml"
+    mode: '0644'
+    owner: "{{ ansible_user_id | default('root') }}"

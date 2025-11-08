@@ -1,0 +1,14 @@
+---
+- name: Deploy Monitron (generate configs + bring up compose)
+  hosts: localhost
+  become: true
+  vars:
+    project_root: "{{ playbook_dir }}/../.."
+    tg_bot_token: "{{ lookup('env','TG_BOT_TOKEN') | default('') }}"
+    tg_chat_id: "{{ lookup('env','TG_CHAT_ID') | default('') }}"
+  roles:
+    - alertmanager
+    - prometheus
+    - grafana
+    - nginx
+    - compose

@@ -1,0 +1,13 @@
+---
+- name: "Copy nginx.conf"
+  copy:
+    src: nginx.conf
+    dest: "{{ project_root }}/nginx/nginx.conf"
+    mode: '0644'
+
+- name: "Copy html files"
+  copy:
+    src: html/
+    dest: "{{ project_root }}/nginx/html/"
+    mode: '0644'
+    recurse: yes

@@ -1,0 +1,7 @@
+# roles/alertmanager/vars/main.yml
+tg_bot_token: ""
+tg_chat_id: ""
+resolve_timeout: "5m"
+group_wait: "10s"
+group_interval: "30s"
+repeat_interval: "1h"

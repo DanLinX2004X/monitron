@@ -1,0 +1,10 @@
+- name: "Ensure docker compose stack is down (ignore errors)"
+  command: docker compose down
+  args:
+    chdir: "{{ project_root }}"
+  ignore_errors: yes
+
+- name: "Bring up docker compose stack"
+  command: docker compose up -d
+  args:
+    chdir: "{{ project_root }}"

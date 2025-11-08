@@ -1,0 +1,8 @@
+---
+- name: "Copy Grafana provisioning"
+  copy:
+    src: provisioning/
+    dest: "{{ project_root }}/grafana/provisioning/"
+    mode: '0644'
+    owner: "{{ ansible_user_id | default('root') }}"
+    recurse: yes
