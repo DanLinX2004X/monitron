@@ -168,12 +168,12 @@ For reliable testing — use real GitHub Actions runners.
 📸 Screenshots
 
 System Dashboard
-![[screenshots/system_dashboard.png]]
+![](screenshots/system_dashboard.png)
 
 
 
 Nginx Monitoring
-![[screenshots/nginx_monitoring.png]]
+![](screenshots/nginx_monitoring.png)
 
 
 
